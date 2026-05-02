@@ -1,25 +1,19 @@
 import { useEffect, useState } from "react";
-
-interface Juego {
-  id: number;
-  nombre: string;
-  imagenUrl: string;
-  plataforma: string;
-  estado: string;
-}
+import useFetchJuegos from "./hooks/useFetchJuegos";
+import { type Juego } from "./interface/JuegoInterface";
 
 const App = () => {
+  const { getJuegos } = useFetchJuegos();
   const [juegos, setJuegos] = useState<Juego[]>([]);
 
   useEffect(() => {
-    const getJuegos = async () => {
-      const datos = await fetch("http://localhost:8080/api/juegos");
-      const juegos = await datos.json();
+    const obtenerJuegos = async () => {
+      const juegos = await getJuegos();
       setJuegos(juegos);
     };
 
-    getJuegos();
-  }, []);
+    obtenerJuegos();
+  }, [getJuegos]);
 
   return (
     <div>
