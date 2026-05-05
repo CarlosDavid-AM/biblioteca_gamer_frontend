@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetchJuegos from "./hooks/useFetchJuegos";
 import { type Juego } from "./interface/TypesJuego";
+import { NavBar } from "./components/NavBar";
 
 const App = () => {
   const { getJuegos } = useFetchJuegos();
@@ -17,6 +18,7 @@ const App = () => {
 
   return (
     <div>
+      <NavBar />
       <h1>Juegos</h1>
       <ul>
         {juegos.map((juego: Juego) => (

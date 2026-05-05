@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { type Juego, type ErrorResponse } from "../interface/TypesJuego";
+import { NavBar } from "../components/NavBar";
 
 const NewGame = () => {
   const [nuevoJuego, setNuevoJuego] = useState<Juego>({
@@ -52,6 +53,7 @@ const NewGame = () => {
 
   return (
     <>
+      <NavBar />
       <h2>Nuevo Juego</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="nombre">Nombre:</label>
