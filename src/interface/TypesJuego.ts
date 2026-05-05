@@ -5,3 +5,8 @@ export interface Juego {
   plataforma: string;
   estado: string;
 }
+
+export interface ErrorResponse {
+  description: string;
+  reasons: string[];
+}

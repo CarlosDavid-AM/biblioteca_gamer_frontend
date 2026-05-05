@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useFetchJuegos from "./hooks/useFetchJuegos";
-import { type Juego } from "./interface/JuegoInterface";
+import { type Juego } from "./interface/TypesJuego";
 
 const App = () => {
   const { getJuegos } = useFetchJuegos();

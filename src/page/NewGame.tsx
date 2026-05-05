@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Juego } from "../interface/JuegoInterface";
+import { type Juego, type ErrorResponse } from "../interface/TypesJuego";
 
 const NewGame = () => {
   const [nuevoJuego, setNuevoJuego] = useState<Juego>({
@@ -9,18 +9,20 @@ const NewGame = () => {
     estado: "OBTENIDO",
   });
 
+  const [errores, setErrores] = useState<ErrorResponse | null>(null);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      nuevoJuego.nombre === "" ||
-      nuevoJuego.imagenUrl === "" ||
-      nuevoJuego.plataforma === "" ||
-      nuevoJuego.estado === ""
-    ) {
-      alert("Por favor complete todos los campos");
-      return;
-    }
+    // if (
+    //   nuevoJuego.nombre === "" ||
+    //   nuevoJuego.imagenUrl === "" ||
+    //   nuevoJuego.plataforma === "" ||
+    //   nuevoJuego.estado === ""
+    // ) {
+    //   alert("Por favor complete todos los campos");
+    //   return;
+    // }
 
     console.log(nuevoJuego);
 
@@ -35,6 +37,13 @@ const NewGame = () => {
         body: JSON.stringify(nuevoJuego),
       });
       const juegos = await datos.json();
+
+      if (!datos.ok) {
+        setErrores(juegos);
+        return;
+      }
+
+      setErrores(null);
       console.log(juegos);
     } catch (error) {
       console.log(error);
@@ -105,6 +114,17 @@ const NewGame = () => {
 
         <button type="submit">Enviar</button>
       </form>
+
+      {errores && (
+        <div>
+          <p>{errores.description}</p>
+          <ul>
+            {errores.reasons.map((reason, index) => (
+              <li key={index}>{reason}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </>
   );
 };

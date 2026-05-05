@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { type Juego } from "../interface/JuegoInterface";
+import { type Juego } from "../interface/TypesJuego";
 
 const useFetchJuegos = () => {
   const getJuegos = useCallback(async (): Promise<Juego[]> => {
