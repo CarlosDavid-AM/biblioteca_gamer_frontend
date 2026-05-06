@@ -4,13 +4,18 @@ export const NavBar = () => {
   return (
     <header>
       <nav>
-        <h2>Mi Biblioteca Gamer</h2>
+        <h2>
+          <Link to="/">Mi Biblioteca Gamer</Link>
+        </h2>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/agregar">Agregar</Link>
           </li>
           <li>
-            <Link to="/new">Nuevo Juego</Link>
+            <Link to="/pendiente">Pendientes</Link>
+          </li>
+          <li>
+            <Link to="/terminados">Juegos Terminados</Link>
           </li>
         </ul>
       </nav>
