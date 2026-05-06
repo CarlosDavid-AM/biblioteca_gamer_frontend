@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
 import Error404 from "../page/Error404";
-import NewGame from "../page/NewGame";
+import AgregarJuego from "../page/AgregarJuego";
 
 const Router = createBrowserRouter([
   {
@@ -10,8 +10,8 @@ const Router = createBrowserRouter([
     errorElement: <Error404 />,
   },
   {
-    path: "/new",
-    element: <NewGame />,
+    path: "/agregar",
+    element: <AgregarJuego />,
   },
 ]);
 
