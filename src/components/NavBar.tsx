@@ -12,7 +12,7 @@ export const NavBar = () => {
             <Link to="/agregar">Agregar</Link>
           </li>
           <li>
-            <Link to="/pendiente">Pendientes</Link>
+            <Link to="/pendientes">Pendientes</Link>
           </li>
           <li>
             <Link to="/terminados">Juegos Terminados</Link>
