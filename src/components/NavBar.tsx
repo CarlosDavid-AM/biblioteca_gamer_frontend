@@ -2,20 +2,64 @@ import { Link } from "react-router";
 
 export const NavBar = () => {
   return (
-    <header>
-      <nav>
-        <h2>
+    <header className="bg-gray-900 border-b border-gray-700 items-center">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+        <h2 className="text-gray-200 text-lg font-semibold">
           <Link to="/">Mi Biblioteca Gamer</Link>
         </h2>
-        <ul>
+
+        <div className="flex items-center">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="bg-gray-800 text-gray-200 placeholder-gray-400 border border-gray-700 rounded px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
+          />
+        </div>
+        <ul className="flex gap-6 text-sm text-gray-300 items-center">
           <li>
-            <Link to="/agregar">Agregar</Link>
+            <Link
+              to="/agregar"
+              className=" bg-gray-500 px-2 py-1 hover:bg-gray-600 rounded"
+            >
+              Agregar
+            </Link>
           </li>
-          <li>
-            <Link to="/pendientes">Pendientes</Link>
-          </li>
-          <li>
-            <Link to="/terminados">Juegos Terminados</Link>
+          <li className="bg-gray-500 rounded p-1">
+            <ul className="flex gap-x-2 p-1">
+              <li>
+                <select
+                  name=""
+                  id=""
+                  className="bg-gray-800 text-gray-200 border border-gray-700 rounded px-3 py-1"
+                >
+                  <option value="">Estados</option>
+                  <option value="OBTENIDO">Obtenido</option>
+                  <option value="JUGANDO">Jugando</option>
+                  <option value="PENDIENTE">Pendiente</option>
+                  <option value="TERMINADO">Terminado</option>
+                </select>
+              </li>
+              <li>
+                <select
+                  name=""
+                  id=""
+                  className="bg-gray-800 text-gray-200 border border-gray-700 rounded px-3 py-1"
+                >
+                  <option value="">Plataformas</option>
+                  <option value="STEAM">Steam</option>
+                  <option value="EPIC">Epic Games</option>
+                  <option value="PS2">PS2</option>
+                  <option value="PS5">PS5</option>
+                  <option value="XBOX">XBOX</option>
+                  <option value="GOG">GOG</option>
+                </select>
+              </li>
+              <li className="flex items-center">
+                <button className="bg-gray-800 hover:bg-gray-950 text-gray-200 border border-gray-700 rounded px-3 py-1">
+                  Filtrar
+                </button>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
