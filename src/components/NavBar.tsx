@@ -1,6 +1,46 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import type { Juego } from "../interface/TypesJuego";
 
 export const NavBar = () => {
+  const [juegos, setJuegos] = useState<Juego[]>([]);
+  const [estado, setStado] = useState<string>("");
+  const [plataforma, setPlataforma] = useState<string>("");
+
+  const handleFilter = async () => {
+    //console.log(estado, plataforma);
+
+    const urlEstado = `http://localhost:8080/api/juegos/estado/${estado}`;
+    const urlPlataforma = `http://localhost:8080/api/juegos/plataforma/${plataforma}`;
+    const urlEstadoPlataforma = `http://localhost:8080/api/juegos/estado-plataforma/${estado}/${plataforma}`;
+
+    if (estado === "" && plataforma === "") {
+      alert("Por favor, seleccione un estado o una plataforma");
+      return;
+    }
+
+    if (estado !== "" && plataforma !== "") {
+      const datos = await fetch(urlEstadoPlataforma);
+      const games = await datos.json();
+      setJuegos(games);
+      console.log(games);
+    }
+
+    if (estado !== "" && plataforma === "") {
+      const datos = await fetch(urlEstado);
+      const games = await datos.json();
+      setJuegos(games);
+      console.log(games);
+    }
+
+    if (plataforma !== "" && estado === "") {
+      const datos = await fetch(urlPlataforma);
+      const games = await datos.json();
+      setJuegos(games);
+      console.log(games);
+    }
+  };
+
   return (
     <header className="bg-gray-900 border-b border-gray-700 items-center">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
@@ -31,6 +71,8 @@ export const NavBar = () => {
                   name=""
                   id=""
                   className="bg-gray-800 text-gray-200 border border-gray-700 rounded px-3 py-1"
+                  value={estado}
+                  onChange={(e) => setStado(e.target.value)}
                 >
                   <option value="">Estados</option>
                   <option value="OBTENIDO">Obtenido</option>
@@ -44,6 +86,8 @@ export const NavBar = () => {
                   name=""
                   id=""
                   className="bg-gray-800 text-gray-200 border border-gray-700 rounded px-3 py-1"
+                  value={plataforma}
+                  onChange={(e) => setPlataforma(e.target.value)}
                 >
                   <option value="">Plataformas</option>
                   <option value="STEAM">Steam</option>
@@ -55,7 +99,10 @@ export const NavBar = () => {
                 </select>
               </li>
               <li className="flex items-center">
-                <button className="bg-gray-800 hover:bg-gray-950 text-gray-200 border border-gray-700 rounded px-3 py-1">
+                <button
+                  className="bg-gray-800 hover:bg-gray-950 text-gray-200 border border-gray-700 rounded px-3 py-1"
+                  onClick={handleFilter}
+                >
                   Filtrar
                 </button>
               </li>
