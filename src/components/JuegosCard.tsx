@@ -1,6 +1,28 @@
 import type { Juego } from "../interface/TypesJuego";
+import useFetchJuegos from "../hooks/useFetchJuegos";
+import { useEffect, useState } from "react";
 
-const JuegosCard = ({ juegos }: { juegos: Juego[] }) => {
+const JuegosCard = () => {
+  const { getGames, deleteGame } = useFetchJuegos();
+
+  const [juegos, setJuegos] = useState<Juego[]>([]);
+
+  useEffect(() => {
+    const obtenerJuegos = async () => {
+      const juegos = await getGames();
+      setJuegos(juegos);
+    };
+
+    obtenerJuegos();
+  }, [getGames]);
+
+  const eliminarJuego = async (id: number) => {
+    if (confirm("¿Estas seguro de eliminar el juego?")) {
+      await deleteGame(id);
+      setJuegos(juegos.filter((juego) => juego.id !== id));
+    } else return;
+  };
+
   return (
     <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
       {juegos.map((juego: Juego) => (
@@ -9,8 +31,8 @@ const JuegosCard = ({ juegos }: { juegos: Juego[] }) => {
           <div className="flex flex-col bg-gray-900 border my-8 border-gray-700 rounded-2xl p-5 shadow-lg items-center justify-center w-full max-w-md">
             <img
               className="imagen-card"
-              src={juego.imagenUrl}
-              alt={juego.nombre}
+              src={juego.imagenUrl || undefined}
+              alt={juego.nombre || undefined}
             />
 
             <div className="flex flex-col flex-1 p-4 leading-normal">
@@ -31,7 +53,11 @@ const JuegosCard = ({ juegos }: { juegos: Juego[] }) => {
                   Editar
                 </button>
 
-                <button className="base-style-button  bg-red-600 border border-red-700 hover:bg-red-700">
+                <button
+                  type="button"
+                  onClick={() => eliminarJuego(juego.id)}
+                  className="base-style-button  bg-red-600 border border-red-700 hover:bg-red-700"
+                >
                   Eliminar
                 </button>
               </div>
