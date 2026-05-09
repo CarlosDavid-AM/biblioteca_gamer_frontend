@@ -157,7 +157,7 @@ const NewGame = () => {
           </span>
 
           <img
-            className="w-64 h-[420px] object-cover rounded-xl border border-gray-700"
+            className="imagen-card"
             src={nuevoJuego.imagenUrl || undefined}
             alt={nuevoJuego.nombre || undefined}
           />

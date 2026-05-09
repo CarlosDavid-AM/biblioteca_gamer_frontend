@@ -20,7 +20,6 @@ const App = () => {
   return (
     <div>
       <NavBar />
-      <h1>Juegos</h1>
       <JuegosCard juegos={juegos} />
     </div>
   );
