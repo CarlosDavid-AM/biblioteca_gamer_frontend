@@ -12,7 +12,7 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   const [estado, setStado] = useState<string>("");
   const [plataforma, setPlataforma] = useState<string>("");
 
-  const { getGames } = useFetchJuegos();
+  const { getGames, deleteGame } = useFetchJuegos();
 
   // Funcionalidad deñ fitro del NavBar
   const handleFilter = async () => {
@@ -48,7 +48,16 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
       console.log(games);
     }
   };
-  //
+  //////////////////////////////////////////////
+
+  // Metodo para eliminar un juego
+  const eliminarJuego = async (id: number) => {
+    if (confirm("¿Estas seguro de eliminar el juego?")) {
+      await deleteGame(id);
+      setJuegos(juegos.filter((juego) => juego.id !== id));
+    } else return;
+  };
+  //////////////////////////////////////////////
 
   useEffect(() => {
     const cargarJuegos = async () => {
@@ -73,6 +82,7 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
         setStado,
         setPlataforma,
         handleFilter,
+        eliminarJuego,
       }}
     >
       {children}

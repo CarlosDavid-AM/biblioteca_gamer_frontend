@@ -3,27 +3,7 @@ import { useContext } from "react";
 import { JuegosContext } from "../context/JuegosContext";
 
 const JuegosCard = () => {
-  // const { getGames, deleteGame } = useFetchJuegos();
-
-  // const [juegos, setJuegos] = useState<Juego[]>([]);
-
-  // useEffect(() => {
-  //   const obtenerJuegos = async () => {
-  //     const juegos = await getGames();
-  //     setJuegos(juegos);
-  //   };
-
-  //   obtenerJuegos();
-  // }, [juegos, getGames]);
-
-  // const eliminarJuego = async (id: number) => {
-  //   if (confirm("¿Estas seguro de eliminar el juego?")) {
-  //     await deleteGame(id);
-  //     setJuegos(juegos.filter((juego) => juego.id !== id));
-  //   } else return;
-  // };
-
-  const { juegos, loading } = useContext(JuegosContext);
+  const { juegos, loading, eliminarJuego } = useContext(JuegosContext);
 
   if (loading) {
     return (
