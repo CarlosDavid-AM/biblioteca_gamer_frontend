@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 import type { Juego } from "../interface/TypesJuego";
 
-export const NavBar = () => {
+export const NavBar = ({
+  filtroJuego,
+}: {
+  filtroJuego: (juegos: Juego[]) => void;
+}) => {
   const [juegos, setJuegos] = useState<Juego[]>([]);
   const [estado, setStado] = useState<string>("");
   const [plataforma, setPlataforma] = useState<string>("");
@@ -24,6 +28,8 @@ export const NavBar = () => {
       const games = await datos.json();
       setJuegos(games);
       console.log(games);
+
+      filtroJuego(games);
     }
 
     if (estado !== "" && plataforma === "") {
