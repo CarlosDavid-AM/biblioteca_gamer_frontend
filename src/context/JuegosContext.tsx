@@ -9,7 +9,46 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   const [juegos, setJuegos] = useState<Juego[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [estado, setStado] = useState<string>("");
+  const [plataforma, setPlataforma] = useState<string>("");
+
   const { getGames } = useFetchJuegos();
+
+  // Funcionalidad deñ fitro del NavBar
+  const handleFilter = async () => {
+    //console.log(estado, plataforma);
+
+    const urlEstado = `http://localhost:8080/api/juegos/estado/${estado}`;
+    const urlPlataforma = `http://localhost:8080/api/juegos/plataforma/${plataforma}`;
+    const urlEstadoPlataforma = `http://localhost:8080/api/juegos/estado-plataforma/${estado}/${plataforma}`;
+
+    if (estado === "" && plataforma === "") {
+      alert("Por favor, seleccione un estado o una plataforma");
+      return;
+    }
+
+    if (estado !== "" && plataforma !== "") {
+      const datos = await fetch(urlEstadoPlataforma);
+      const games = await datos.json();
+      setJuegos(games);
+      console.log(games);
+    }
+
+    if (estado !== "" && plataforma === "") {
+      const datos = await fetch(urlEstado);
+      const games = await datos.json();
+      setJuegos(games);
+      console.log(games);
+    }
+
+    if (plataforma !== "" && estado === "") {
+      const datos = await fetch(urlPlataforma);
+      const games = await datos.json();
+      setJuegos(games);
+      console.log(games);
+    }
+  };
+  //
 
   useEffect(() => {
     const cargarJuegos = async () => {
@@ -31,6 +70,9 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
       value={{
         juegos,
         loading,
+        setStado,
+        setPlataforma,
+        handleFilter,
       }}
     >
       {children}

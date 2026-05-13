@@ -1,51 +1,10 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router";
-import type { Juego } from "../interface/TypesJuego";
+import { JuegosContext } from "../context/JuegosContext";
 
-export const NavBar = ({
-  filtroJuego,
-}: {
-  filtroJuego: (juegos: Juego[]) => void;
-}) => {
-  const [juegos, setJuegos] = useState<Juego[]>([]);
-  const [estado, setStado] = useState<string>("");
-  const [plataforma, setPlataforma] = useState<string>("");
-
-  const handleFilter = async () => {
-    //console.log(estado, plataforma);
-
-    const urlEstado = `http://localhost:8080/api/juegos/estado/${estado}`;
-    const urlPlataforma = `http://localhost:8080/api/juegos/plataforma/${plataforma}`;
-    const urlEstadoPlataforma = `http://localhost:8080/api/juegos/estado-plataforma/${estado}/${plataforma}`;
-
-    if (estado === "" && plataforma === "") {
-      alert("Por favor, seleccione un estado o una plataforma");
-      return;
-    }
-
-    if (estado !== "" && plataforma !== "") {
-      const datos = await fetch(urlEstadoPlataforma);
-      const games = await datos.json();
-      setJuegos(games);
-      console.log(games);
-
-      filtroJuego(games);
-    }
-
-    if (estado !== "" && plataforma === "") {
-      const datos = await fetch(urlEstado);
-      const games = await datos.json();
-      setJuegos(games);
-      console.log(games);
-    }
-
-    if (plataforma !== "" && estado === "") {
-      const datos = await fetch(urlPlataforma);
-      const games = await datos.json();
-      setJuegos(games);
-      console.log(games);
-    }
-  };
+export const NavBar = () => {
+  const { estado, setStado, plataforma, setPlataforma, handleFilter } =
+    useContext(JuegosContext);
 
   return (
     <header className="bg-gray-900 border-b border-gray-700 items-center">

@@ -1,6 +1,5 @@
 import type { Juego } from "../interface/TypesJuego";
 import { useContext } from "react";
-import { NavBar } from "./NavBar";
 import { JuegosContext } from "../context/JuegosContext";
 
 const JuegosCard = () => {
@@ -36,7 +35,6 @@ const JuegosCard = () => {
 
   return (
     <>
-      {/*<NavBar filtroJuego={setJuegos} />*/}
       <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
         {juegos.map((juego: Juego) => (
           <li key={juego.id} className="w-full flex justify-center">
