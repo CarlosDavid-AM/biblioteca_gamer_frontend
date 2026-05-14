@@ -15,7 +15,7 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
 
   const [juegoAEditar, setJuegoAEditar] = useState<Juego | null>(null);
 
-  const { getGames, deleteGame } = useFetchJuegos();
+  const { getGames, updateGame, deleteGame } = useFetchJuegos();
   const navigate = useNavigate();
 
   // Funcionalidad deñ fitro del NavBar
@@ -73,24 +73,13 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
       // Redirigir al formulario de editar
       navigate("/agregar");
     } else {
-      // Logica para actualizar el juego
-      try {
-        const resp = await fetch(`http://localhost:8080/api/juegos/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const juegoActualizado = await resp.json();
-
-        if (resp.ok) {
-          setJuegos(juegos.map((j) => (j.id === id ? juegoActualizado : j)));
-          setJuegoAEditar(null);
-          navigate("/");
-        }
-      } catch (error) {
-        console.log(error);
+      const response = await updateGame(id, data);
+      if (response) {
+        setJuegos(juegos.map((j) => (j.id === id ? response : j)));
+        setJuegoAEditar(null);
+        navigate("/");
+      } else {
+        alert("Error al actualizar el juego");
       }
     }
   };

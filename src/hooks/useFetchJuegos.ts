@@ -13,6 +13,26 @@ const useFetchJuegos = () => {
     return juegos;
   }, []);
 
+  const updateGame = useCallback(async (id: number, data: Juego) => {
+    try {
+      const resp = await fetch(`http://localhost:8080/api/juegos/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const juegoActualizado = await resp.json();
+
+      if (resp.ok) {
+        return juegoActualizado;
+      }
+      return "No se pudo actualizar el juego";
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   const deleteGame = useCallback(async (id: number) => {
     try {
       await fetch(`http://localhost:8080/api/juegos/${id}`, {
@@ -23,7 +43,7 @@ const useFetchJuegos = () => {
     }
   }, []);
 
-  return { getGames, deleteGame };
+  return { getGames, updateGame, deleteGame };
 };
 
 export default useFetchJuegos;
