@@ -3,7 +3,8 @@ import { useContext } from "react";
 import { JuegosContext } from "../context/JuegosContext";
 
 const JuegosCard = () => {
-  const { juegos, loading, eliminarJuego } = useContext(JuegosContext);
+  const { juegos, loading, eliminarJuego, editarJuego } =
+    useContext(JuegosContext);
 
   if (loading) {
     return (
@@ -40,7 +41,10 @@ const JuegosCard = () => {
                 </p>
 
                 <div className="flex gap-3 mt-auto">
-                  <button className="base-style-button bg-blue-600 border border-blue-700 hover:bg-blue-700">
+                  <button
+                    onClick={() => editarJuego(juego.id)}
+                    className="base-style-button bg-blue-600 border border-blue-700 hover:bg-blue-700"
+                  >
                     Editar
                   </button>
 

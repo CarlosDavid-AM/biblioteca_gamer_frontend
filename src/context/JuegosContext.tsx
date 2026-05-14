@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import useFetchJuegos from "../hooks/useFetchJuegos";
 import type { Juego } from "../interface/TypesJuego";
+import { useNavigate } from "react-router";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const JuegosContext = createContext(null);
@@ -13,6 +14,7 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   const [plataforma, setPlataforma] = useState<string>("");
 
   const { getGames, deleteGame } = useFetchJuegos();
+  const navigate = useNavigate();
 
   // Funcionalidad deñ fitro del NavBar
   const handleFilter = async () => {
@@ -59,6 +61,16 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   };
   //////////////////////////////////////////////
 
+  // Metodo para editar un juego
+  const editarJuego = (id: number) => {
+    // Obterner los datos por id
+    const datosId = juegos.find((juego) => juego.id === id);
+    console.log(datosId);
+
+    // Redirigir al formulario de editar
+    navigate("/agregar");
+  };
+
   useEffect(() => {
     const cargarJuegos = async () => {
       try {
@@ -83,6 +95,7 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
         setPlataforma,
         handleFilter,
         eliminarJuego,
+        editarJuego,
       }}
     >
       {children}
