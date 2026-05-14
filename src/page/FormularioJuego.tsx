@@ -3,7 +3,7 @@ import { type Juego, type ErrorResponse } from "../interface/TypesJuego";
 import { NavBar } from "../components/NavBar";
 import { JuegosContext } from "../context/JuegosContext";
 
-const NewGame = () => {
+const FormularioJuego = () => {
   const { juegoAEditar, setJuegoAEditar, editarJuego } =
     useContext(JuegosContext);
 
@@ -203,4 +203,4 @@ const NewGame = () => {
   );
 };
 
-export default NewGame;
+export default FormularioJuego;

@@ -18,6 +18,8 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   const { getGames, updateGame, deleteGame } = useFetchJuegos();
   const navigate = useNavigate();
 
+  ////////////////////////////////////////////////////////////////////
+
   // Funcionalidad deñ fitro del NavBar
   const handleFilter = async () => {
     //console.log(estado, plataforma);
@@ -83,6 +85,8 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
       }
     }
   };
+
+  ////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     const cargarJuegos = async () => {

@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from "react-router";
 import App from "../App";
 import Error404 from "../page/Error404";
-import AgregarJuego from "../page/AgregarJuego";
+import FormularioJuego from "../page/FormularioJuego";
 import { JuegosProvider } from "../context/JuegosContext";
 
 const Router = createBrowserRouter([
@@ -19,7 +19,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "/agregar",
-        element: <AgregarJuego />,
+        element: <FormularioJuego />,
       },
     ],
   },
