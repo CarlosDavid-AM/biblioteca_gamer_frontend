@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { type Juego, type ErrorResponse } from "../interface/TypesJuego";
 import { NavBar } from "../components/NavBar";
+import { JuegosContext } from "../context/JuegosContext";
 
 const NewGame = () => {
+  const { juegoAEditar, setJuegoAEditar, editarJuego } =
+    useContext(JuegosContext);
+
   const [nuevoJuego, setNuevoJuego] = useState<Juego>({
     nombre: "",
     imagenUrl: "",
@@ -12,8 +16,20 @@ const NewGame = () => {
 
   const [errores, setErrores] = useState<ErrorResponse | null>(null);
 
+  useEffect(() => {
+    if (juegoAEditar) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setNuevoJuego(juegoAEditar);
+    }
+  }, [juegoAEditar]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (juegoAEditar && juegoAEditar.id) {
+      await editarJuego(juegoAEditar.id, nuevoJuego);
+      return;
+    }
 
     try {
       const datos = await fetch("http://localhost:8080/api/juegos", {
@@ -143,12 +159,32 @@ const NewGame = () => {
             </div>
           )}
 
-          <button
-            type="submit"
-            className="bg-gray-700 hover:bg-gray-600 transition-colors duration-200 text-white font-bold py-3 rounded-lg mt-2 border border-gray-600"
-          >
-            Enviar
-          </button>
+          <div className="flex flex-col gap-2">
+            <button
+              type="submit"
+              className="bg-gray-700 hover:bg-gray-600 transition-colors duration-200 text-white font-bold py-3 rounded-lg mt-2 border border-gray-600 w-full"
+            >
+              {juegoAEditar ? "Actualizar" : "Crear"}
+            </button>
+
+            {juegoAEditar && (
+              <button
+                type="button"
+                onClick={() => {
+                  setJuegoAEditar(null);
+                  setNuevoJuego({
+                    nombre: "",
+                    imagenUrl: "",
+                    plataforma: "STEAM",
+                    estado: "OBTENIDO",
+                  });
+                }}
+                className="bg-red-900/50 hover:bg-red-900/70 transition-colors duration-200 text-red-200 font-bold py-3 rounded-lg border border-red-700 w-full"
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
         </form>
 
         <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 shadow-lg flex flex-col items-center justify-center w-full max-w-md">

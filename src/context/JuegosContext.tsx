@@ -13,6 +13,8 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   const [estado, setStado] = useState<string>("");
   const [plataforma, setPlataforma] = useState<string>("");
 
+  const [juegoAEditar, setJuegoAEditar] = useState<Juego | null>(null);
+
   const { getGames, deleteGame } = useFetchJuegos();
   const navigate = useNavigate();
 
@@ -62,13 +64,35 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   //////////////////////////////////////////////
 
   // Metodo para editar un juego
-  const editarJuego = (id: number) => {
-    // Obterner los datos por id
-    const datosId = juegos.find((juego) => juego.id === id);
-    console.log(datosId);
+  const editarJuego = async (id: number, data?: Juego) => {
+    if (!data) {
+      // Obterner los datos por id
+      const datosId = juegos.find((juego) => juego.id === id);
+      setJuegoAEditar(datosId || null);
 
-    // Redirigir al formulario de editar
-    navigate("/agregar");
+      // Redirigir al formulario de editar
+      navigate("/agregar");
+    } else {
+      // Logica para actualizar el juego
+      try {
+        const resp = await fetch(`http://localhost:8080/api/juegos/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const juegoActualizado = await resp.json();
+
+        if (resp.ok) {
+          setJuegos(juegos.map((j) => (j.id === id ? juegoActualizado : j)));
+          setJuegoAEditar(null);
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -96,6 +120,8 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
         handleFilter,
         eliminarJuego,
         editarJuego,
+        juegoAEditar,
+        setJuegoAEditar,
       }}
     >
       {children}
