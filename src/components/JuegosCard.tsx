@@ -2,11 +2,17 @@ import type { Juego } from "../interface/TypesJuego";
 import { useContext } from "react";
 import { JuegosContext } from "../context/JuegosContext";
 
-const JuegosCard = () => {
-  const { juegos, loading, eliminarJuego, editarJuego } =
+interface Props {
+  juegos?: Juego[];
+}
+
+const JuegosCard = ({ juegos: juegosProps }: Props) => {
+  const { juegos: juegosContext, loading, eliminarJuego, editarJuego, search } =
     useContext(JuegosContext);
 
-  if (loading) {
+  const juegosAMostrar = juegosProps || juegosContext;
+
+  if (loading && !juegosProps) {
     return (
       <div>
         <h1>Cargando...</h1>
@@ -14,10 +20,14 @@ const JuegosCard = () => {
     );
   }
 
+  const juegosFiltrados = juegosAMostrar.filter((juego: Juego) =>
+    juego.nombre.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <>
       <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
-        {juegos.map((juego: Juego) => (
+        {juegosFiltrados.map((juego: Juego) => (
           <li key={juego.id} className="w-full flex justify-center">
             {/* cards */}
             <div className="flex flex-col bg-gray-900 border my-8 border-gray-700 rounded-2xl p-5 shadow-lg items-center justify-center w-full max-w-md">

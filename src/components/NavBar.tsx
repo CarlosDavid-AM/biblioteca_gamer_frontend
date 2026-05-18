@@ -3,8 +3,19 @@ import { Link } from "react-router";
 import { JuegosContext } from "../context/JuegosContext";
 
 export const NavBar = () => {
-  const { estado, setStado, plataforma, setPlataforma, handleFilter } =
-    useContext(JuegosContext);
+  const {
+    estado,
+    setStado,
+    plataforma,
+    setPlataforma,
+    handleFilter,
+    search,
+    setSearch,
+  } = useContext(JuegosContext);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   return (
     <header className="bg-gray-900 border-b border-gray-700 items-center">
@@ -16,7 +27,9 @@ export const NavBar = () => {
         <div className="flex items-center">
           <input
             type="text"
-            placeholder="Search..."
+            value={search}
+            onChange={handleSearch}
+            placeholder="Buscar..."
             className="bg-gray-800 text-gray-200 placeholder-gray-400 border border-gray-700 rounded px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
           />
         </div>

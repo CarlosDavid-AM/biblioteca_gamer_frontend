@@ -13,6 +13,8 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
   const [estado, setStado] = useState<string>("");
   const [plataforma, setPlataforma] = useState<string>("");
 
+  const [search, setSearch] = useState<string>("");
+
   const [juegoAEditar, setJuegoAEditar] = useState<Juego | null>(null);
 
   const { getGames, updateGame, deleteGame } = useFetchJuegos();
@@ -107,6 +109,7 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
     <JuegosContext.Provider
       value={{
         juegos,
+        setJuegos,
         loading,
         setStado,
         setPlataforma,
@@ -115,6 +118,8 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
         editarJuego,
         juegoAEditar,
         setJuegoAEditar,
+        search,
+        setSearch,
       }}
     >
       {children}
