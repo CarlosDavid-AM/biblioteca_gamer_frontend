@@ -1,75 +1,59 @@
-# React + TypeScript + Vite
+# Biblioteca Gamer - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es el frontend de una aplicación para gestionar tu biblioteca personal de videojuegos. Permite visualizar, agregar, editar y eliminar juegos, así como filtrarlos por estado (Jugando, Pendiente, Terminado, etc.) y plataforma (Steam, Epic, PS5, etc.).
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Gestión completa de juegos (CRUD).
+- Buscador en tiempo real por nombre.
+- Filtros por estado y plataforma.
+- Diseño hechos con Tailwind CSS.
 
-## React Compiler
+## 📋 Requisitos
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- [Node.js](https://nodejs.org/) (versión 18 o superior recomendada)
+- [npm](https://www.npmjs.com/)
 
-Note: This will impact Vite dev & build performances.
+## 🛠️ Instalación y Configuración
 
-## Expanding the ESLint configuration
+1. Clonar el repositorio:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   ```bash
+   git clone https://github.com/CarlosDavid-AM/biblioteca_gamer_frontend.git
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. Navegar al directorio del proyecto:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```bash
+   cd biblioteca_gamer_frontend
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. Instalar las dependencias:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+4. Iniciar el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+La aplicación estará disponible en `http://localhost:5173`.
+
+## 🔗 Proyecto Backend
+
+**Nota Importante:** Este frontend requiere de una API activa para funcionar correctamente. El proyecto backend se encuentra en el siguiente enlace:
+
+👉 [Repositorio Backend](https://github.com/CarlosDavid-AM/biblioteca_gamer_API) | | https://github.com/CarlosDavid-AM/biblioteca_gamer_API
+
+_Asegúrate de tener el backend corriendo en `http://localhost:8080` para que el frontend pueda consumir los datos._
+
+## 🧰 Tecnologías Utilizadas
+
+- React 19
+- TypeScript
+- Vite
+- React Router 7
+- Context API
+- Tailwind CSS
