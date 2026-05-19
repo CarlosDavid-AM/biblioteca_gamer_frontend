@@ -17,10 +17,23 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
 
   const [juegoAEditar, setJuegoAEditar] = useState<Juego | null>(null);
 
-  const { getGames, updateGame, deleteGame } = useFetchJuegos();
+  const { getGames, updateGame, deleteGame, createGame } = useFetchJuegos();
   const navigate = useNavigate();
 
   ////////////////////////////////////////////////////////////////////
+
+  // Metodo para crear un juego
+  const crearJuego = async (data: Juego) => {
+    const response = await createGame(data);
+
+    if (response && !response.description) {
+      setJuegos([...juegos, response]);
+      navigate("/");
+      return true;
+    } else {
+      return response;
+    }
+  };
 
   // Funcionalidad deñ fitro del NavBar
   const handleFilter = async () => {
@@ -116,6 +129,7 @@ export function JuegosProvider({ children }: { children: React.ReactNode }) {
         handleFilter,
         eliminarJuego,
         editarJuego,
+        crearJuego,
         juegoAEditar,
         setJuegoAEditar,
         search,

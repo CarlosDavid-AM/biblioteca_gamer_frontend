@@ -4,7 +4,7 @@ import { NavBar } from "../components/NavBar";
 import { JuegosContext } from "../context/JuegosContext";
 
 const FormularioJuego = () => {
-  const { juegoAEditar, setJuegoAEditar, editarJuego } =
+  const { juegoAEditar, setJuegoAEditar, editarJuego, crearJuego } =
     useContext(JuegosContext);
 
   const [nuevoJuego, setNuevoJuego] = useState<Juego>({
@@ -31,21 +31,9 @@ const FormularioJuego = () => {
       return;
     }
 
-    try {
-      const datos = await fetch("http://localhost:8080/api/juegos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(nuevoJuego),
-      });
-      const juegos = await datos.json();
+    const response = await crearJuego(nuevoJuego);
 
-      if (!datos.ok) {
-        setErrores(juegos);
-        return;
-      }
-
+    if (response === true) {
       setErrores(null);
       setNuevoJuego({
         nombre: "",
@@ -53,8 +41,8 @@ const FormularioJuego = () => {
         plataforma: "STEAM",
         estado: "OBTENIDO",
       });
-    } catch (error) {
-      console.log(error);
+    } else {
+      setErrores(response);
     }
   };
 

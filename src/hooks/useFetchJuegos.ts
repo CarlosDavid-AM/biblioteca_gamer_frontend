@@ -43,7 +43,27 @@ const useFetchJuegos = () => {
     }
   }, []);
 
-  return { getGames, updateGame, deleteGame };
+  const createGame = useCallback(async (data: Juego) => {
+    try {
+      const resp = await fetch("http://localhost:8080/api/juegos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const nuevoJuego = await resp.json();
+
+      if (resp.ok) {
+        return nuevoJuego;
+      }
+      return nuevoJuego;
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  return { getGames, updateGame, deleteGame, createGame };
 };
 
 export default useFetchJuegos;
