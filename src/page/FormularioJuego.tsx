@@ -113,6 +113,7 @@ const FormularioJuego = () => {
             <option value="PS5">PS5</option>
             <option value="XBOX">XBOX</option>
             <option value="GOG">GOG</option>
+            <option value="OTRO">Otro</option>
           </select>
 
           <label htmlFor="estado" className="text-gray-200 font-semibold">
